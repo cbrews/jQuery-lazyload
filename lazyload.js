@@ -19,7 +19,12 @@
          * todo allow different callbacks for each item in el
          */
         function event(){
-            var windowBottom = window.pageYOffset + window.innerHeight;
+            var scrollDepth = window.pageYOffset;
+            if(scrollDepth === undefined){
+                // from https://developer.mozilla.org/en-US/docs/Web/API/Element.getBoundingClientRect
+                scrollDepth = (((t = document.documentElement) || (t = document.body.parentNode)) && typeof t.ScrollTop == 'number' ? t : document.body).ScrollTop
+            }
+            var windowBottom = scrollDepth + window.innerHeight;
             el.each(function(){
                 var elementTop = this.getBoundingClientRect().top;
                 if(windowBottom > elementTop){
